@@ -30,14 +30,16 @@ client.connect(err => {
             })
     })
 
-    app.post('/reviewForm', (req, res) => {
+    app.post('/review2', (req, res) => {
         const reviewData = req.body;
+        console.log(reviewData);
         collection.insertOne(reviewData)
             .then(result => {
                 res.send(result.insertedCount > 0)
                 console.log(result)
             })
     })
+
     app.get('/review', (req, res) => {
         collection.find({})
             .toArray((error, documents) => {
@@ -96,5 +98,6 @@ client.connect(err => {
     })
   
 });
+
 
 app.listen(process.env.PORT || port)
