@@ -19,6 +19,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const Collection = client.db("car-services").collection("services");
+    const reviewCollection = client.db("car-services").collection("review");
 
     app.post('/formData', (req, res) => {
         const data = req.body;
@@ -33,15 +34,15 @@ client.connect(err => {
     app.post('/review2', (req, res) => {
         const reviewData = req.body;
         console.log(reviewData);
-        collection.insertOne(reviewData)
+        reviewCollection.insertOne(reviewData)
             .then(result => {
                 res.send(result.insertedCount > 0)
                 console.log(result)
             })
     })
 
-    app.get('/review', (req, res) => {
-        collection.find({})
+    app.get('/review2', (req, res) => {
+        reviewCollection.find({})
             .toArray((error, documents) => {
                 res.send(documents);
             })
